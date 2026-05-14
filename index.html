@@ -9,8 +9,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1533247831593485');
+  fbq('track', 'PageView');
+  </script>
 </head>
 <body>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1533247831593485&ev=PageView&noscript=1"
+  alt=""></noscript>
   <header class="site-header" id="top">
     <a class="brand" href="#top" aria-label="Đại học Đông Đô">
       <img class="brand-logo" src="assets/logo-dongdo.png" alt="Logo Trường Đại học Đông Đô">
@@ -43,7 +58,7 @@
           <div class="hero-actions">
             <a class="btn btn-primary" href="#form-nhanh">Đăng ký xét tuyển ngay</a>
             <button class="btn btn-dark" type="button" data-open-popup="lienthong-popup">Đăng ký Liên thông Chính quy</button>
-            <a class="btn btn-soft" href="tel:0922059678">Gọi hotline</a>
+            <button class="btn btn-soft" type="button" data-open-popup="nganhkhac-popup">Đăng ký các ngành khác</button>
           </div>
           <dl class="quick-facts">
             <div><dt>04</dt><dd>phương thức xét tuyển</dd></div>
@@ -74,7 +89,7 @@
           <h2>Nhận tư vấn xét tuyển Đại học Đông Đô 2026</h2>
           <p>Để lại thông tin để được tư vấn ngành học phù hợp, kiểm tra điều kiện xét tuyển và hướng dẫn hồ sơ.</p>
         </div>
-        <form class="lead-form reveal delay-1" data-form-name="Đăng ký tư vấn nhanh">
+        <form class="lead-form reveal delay-1" data-form-name="Đăng ký tư vấn nhanh" data-webhook="chinhquy" data-lead-type="chinh_quy">
           <div class="field"><label for="quick-name">Họ và tên</label><input id="quick-name" name="name" required placeholder="Nhập họ và tên"></div>
           <div class="field"><label for="quick-phone">Số điện thoại</label><input id="quick-phone" name="phone" required inputmode="tel" placeholder="Ví dụ: 0922.059.678"></div>
           <div class="field"><label for="quick-email">Email</label><input id="quick-email" name="email" type="email" required placeholder="tenban@gmail.com"></div>
@@ -188,7 +203,7 @@
           <h2>Đăng ký xét tuyển Đại học Đông Đô 2026</h2>
           <p>Hoàn thành thông tin để được tư vấn hồ sơ, phương thức xét tuyển và lựa chọn ngành phù hợp.</p>
         </div>
-        <form class="detail-form reveal delay-1" data-form-name="Đăng ký xét tuyển">
+        <form class="detail-form reveal delay-1" data-form-name="Đăng ký xét tuyển" data-webhook="chinhquy" data-lead-type="chinh_quy">
           <div class="form-grid">
             <div class="field"><label>Họ và tên (*)</label><input name="full_name" required></div>
             <div class="field"><label>Số điện thoại (*)</label><input name="phone" required inputmode="tel"></div>
@@ -261,7 +276,7 @@
   <div class="floating-cta desktop-only" aria-label="Nút liên hệ nhanh">
     <a href="#form-chi-tiet">Đăng ký chính quy</a>
     <a href="#form-chi-tiet" data-open-popup="lienthong-popup">Đăng ký liên thông</a>
-    <a href="tel:0922059678">Gọi hotline</a>
+    <a href="#form-chi-tiet" data-open-popup="nganhkhac-popup">Đăng ký các ngành khác</a>
   </div>
 
   <div class="popup-overlay" id="lienthong-popup" aria-hidden="true">
@@ -269,7 +284,7 @@
       <button class="popup-close" type="button" aria-label="Đóng" data-close-popup>&times;</button>
       <p class="eyebrow">Đăng ký liên thông</p>
       <h3 id="lienthong-title">Đăng ký Liên thông Chính quy</h3>
-      <form class="lead-form popup-form" data-form-name="Đăng ký Liên thông Chính quy">
+      <form class="lead-form popup-form" data-form-name="Đăng ký Liên thông Chính quy" data-webhook="lienthong" data-lead-type="lien_thong">
         <div class="field"><label>Họ và tên</label><input name="full_name" required placeholder="Nhập họ và tên"></div>
         <div class="field"><label>Ngày sinh</label><input name="birth_date" type="date"></div>
         <div class="field"><label>Số điện thoại</label><input name="phone" required inputmode="tel" placeholder="Ví dụ: 0922.059.678"></div>
@@ -283,10 +298,50 @@
     </div>
   </div>
 
+  <div class="popup-overlay" id="nganhkhac-popup" aria-hidden="true">
+    <div class="popup-card" role="dialog" aria-modal="true" aria-labelledby="nganhkhac-title">
+      <button class="popup-close" type="button" aria-label="Đóng" data-close-popup>&times;</button>
+      <p class="eyebrow">Đăng ký chính quy</p>
+      <h3 id="nganhkhac-title">Đăng ký các ngành khác</h3>
+      <form class="lead-form popup-form" data-form-name="Đăng ký các ngành khác" data-webhook="chinhquy" data-lead-type="nganh_khac">
+        <div class="field"><label>Họ và tên (*)</label><input name="full_name" required placeholder="Nhập họ và tên"></div>
+        <div class="field"><label>Số điện thoại (*)</label><input name="phone" required inputmode="tel" placeholder="Ví dụ: 0922.059.678"></div>
+        <div class="field"><label>Email (*)</label><input name="email" type="email" required placeholder="tenban@gmail.com"></div>
+        <div class="field">
+          <label>Ngành quan tâm</label>
+          <select name="major" required>
+            <option value="">Chọn ngành</option>
+            <option>Quản trị kinh doanh - 7340101</option>
+            <option>Quản trị nguồn nhân lực - 7340101</option>
+            <option>Tài chính ngân hàng - 7340201</option>
+            <option>Tài chính doanh nghiệp - 7340201</option>
+            <option>Thanh toán quốc tế - 7340201</option>
+            <option>Kế toán - 7340301</option>
+            <option>Luật kinh tế - 7380107</option>
+            <option>Công nghệ thông tin - 7480201</option>
+            <option>Trí tuệ nhân tạo ứng dụng - 7480201</option>
+            <option>An toàn hệ thống thông tin - 7480201</option>
+            <option>Thú Y - 7640101</option>
+            <option>Dược học - 7720201</option>
+            <option>Điều dưỡng - 7720301</option>
+            <option>Kỹ thuật xét nghiệm Y học - 7720601</option>
+            <option>Ngôn ngữ Trung Quốc - 7220204</option>
+            <option>Ngôn ngữ Nhật - 7220209</option>
+            <option>Ngôn ngữ Hàn Quốc - 7220210</option>
+            <option>Quản lý nhà nước - 7310205</option>
+          </select>
+        </div>
+        <div class="field"><label>Phương thức xét tuyển</label><select name="method" required><option>Xét học bạ</option><option>Xét điểm thi THPT</option><option>Xét điểm ĐGNL</option><option>Cần tư vấn thêm</option></select></div>
+        <div class="field"><label>Tổng điểm TB 3 năm (10-11-12) của 3 môn trong tổ hợp</label><input name="gpa_sum" type="number" min="0" max="30" step="0.01" required placeholder="Ví dụ: 18.50"></div>
+        <button class="btn btn-primary full" type="submit">Đăng ký xét tuyển</button>
+      </form>
+    </div>
+  </div>
+
   <div class="mobile-sticky" aria-label="Thanh đăng ký nhanh trên mobile">
     <a href="#form-chi-tiet">Đăng ký chính quy</a>
     <a href="#form-chi-tiet" data-open-popup="lienthong-popup">Đăng ký liên thông</a>
-    <a href="tel:0922059678">Gọi hotline</a>
+    <a href="#form-chi-tiet" data-open-popup="nganhkhac-popup">Đăng ký các ngành khác</a>
   </div>
 
   <div class="toast" role="status" aria-live="polite"></div>

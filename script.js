@@ -66,8 +66,10 @@ forms.forEach((form) => {
     }
 
     const formName = form.dataset.formName || 'Form đăng ký';
-    const isLienThongForm = Boolean(form.closest('.popup-overlay'));
+    const webhookType = form.dataset.webhook || 'chinhquy';
+    const isLienThongForm = webhookType === 'lienthong';
     const webhookUrl = isLienThongForm ? LIENTHONG_APPS_SCRIPT_WEB_APP_URL : APPS_SCRIPT_WEB_APP_URL;
+    const leadType = form.dataset.leadType || (isLienThongForm ? 'lien_thong' : 'chinh_quy');
 
     if (!webhookUrl || webhookUrl.includes('PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE')) {
       showToast('Chưa cấu hình URL Google Apps Script.');
@@ -107,6 +109,13 @@ forms.forEach((form) => {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
         body: 'ok=1'
       });
+
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead', {
+          content_name: formName,
+          lead_type: leadType
+        });
+      }
 
       showToast(`${formName} đã được ghi nhận. Bộ phận tuyển sinh sẽ liên hệ tư vấn.`);
       form.reset();
