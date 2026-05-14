@@ -86,11 +86,13 @@ forms.forEach((form) => {
       params.set(key, String(value).trim());
     });
 
+    // Tuong thich voi sheet cu: neu chi co full_name thi bo sung name.
+    if (!params.get('name') && params.get('full_name')) {
+      params.set('name', params.get('full_name'));
+    }
+
     if (isLienThongForm) {
       // Tuong thich voi cac sheet/appscript dang dung bo cot cu.
-      if (!params.get('name')) {
-        params.set('name', params.get('full_name') || '');
-      }
       if (!params.get('method')) {
         params.set('method', params.get('training_system') || '');
       }
