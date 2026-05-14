@@ -42,6 +42,7 @@
           </div>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#form-nhanh">Đăng ký xét tuyển ngay</a>
+            <button class="btn btn-dark" type="button" data-open-popup="lienthong-popup">Đăng ký Liên thông Chính quy</button>
             <a class="btn btn-soft" href="tel:0922059678">Gọi hotline</a>
           </div>
           <dl class="quick-facts">
@@ -258,14 +259,34 @@
   </footer>
 
   <div class="floating-cta desktop-only" aria-label="Nút liên hệ nhanh">
-    <a href="#form-chi-tiet">Đăng ký ngay</a>
-    <a href="#nganh">Tư vấn chọn ngành</a>
+    <a href="#form-chi-tiet">Đăng ký chính quy</a>
+    <a href="#form-chi-tiet" data-open-popup="lienthong-popup">Đăng ký liên thông</a>
+    <a href="tel:0922059678">Gọi hotline</a>
+  </div>
+
+  <div class="popup-overlay" id="lienthong-popup" aria-hidden="true">
+    <div class="popup-card" role="dialog" aria-modal="true" aria-labelledby="lienthong-title">
+      <button class="popup-close" type="button" aria-label="Đóng" data-close-popup>&times;</button>
+      <p class="eyebrow">Đăng ký liên thông</p>
+      <h3 id="lienthong-title">Đăng ký Liên thông Chính quy</h3>
+      <form class="lead-form popup-form" data-form-name="Đăng ký Liên thông Chính quy">
+        <div class="field"><label>Họ và tên</label><input name="full_name" required placeholder="Nhập họ và tên"></div>
+        <div class="field"><label>Ngày sinh</label><input name="birth_date" type="date"></div>
+        <div class="field"><label>Số điện thoại</label><input name="phone" required inputmode="tel" placeholder="Ví dụ: 0922.059.678"></div>
+        <div class="field"><label>Email</label><input name="email" type="email" required placeholder="tenban@gmail.com"></div>
+        <div class="field"><label>Hệ đào tạo</label><select name="training_system" required><option value="">Chọn hệ đào tạo</option><option>Liên thông Chính quy</option><option>Liên thông Vừa làm vừa học</option><option>Vừa làm vừa học</option><option>Hệ chính quy đối với người tốt nghiệp TC, CĐ trở lên</option></select></div>
+        <div class="field"><label>Ngành xét tuyển</label><select name="major" required><option value="">Chọn ngành xét tuyển</option><option>Công nghệ kỹ thuật ô tô</option><option>Điều dưỡng</option><option>Thương mại điện tử</option></select></div>
+        <div class="field"><label>Học vấn hiện tại</label><select name="current_education" required><option value="">Học vấn hiện tại</option><option>Đã tốt nghiệp THPT</option><option>Đã tốt nghiệp Trung cấp</option><option>Đã tốt nghiệp Cao đẳng</option><option>Đã tốt nghiệp Đại học</option></select></div>
+        <div class="field full"><label>Để lại lời nhắn cho chúng tôi</label><textarea name="note" rows="4" placeholder="Nhập nội dung cần tư vấn thêm"></textarea></div>
+        <button class="btn btn-primary full" type="submit">Đăng ký xét tuyển</button>
+      </form>
+    </div>
   </div>
 
   <div class="mobile-sticky" aria-label="Thanh đăng ký nhanh trên mobile">
-    <a href="#form-chi-tiet">Đăng ký</a>
+    <a href="#form-chi-tiet">Đăng ký chính quy</a>
+    <a href="#form-chi-tiet" data-open-popup="lienthong-popup">Đăng ký liên thông</a>
     <a href="tel:0922059678">Gọi hotline</a>
-    <a href="#form-nhanh">Nhận tư vấn</a>
   </div>
 
   <div class="toast" role="status" aria-live="polite"></div>

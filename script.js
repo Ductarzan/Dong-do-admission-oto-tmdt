@@ -1,9 +1,12 @@
 const toast = document.querySelector('.toast');
 const forms = document.querySelectorAll('form[data-form-name]');
 const reveals = document.querySelectorAll('.reveal');
+const popupTriggers = document.querySelectorAll('[data-open-popup]');
+const popupCloseButtons = document.querySelectorAll('[data-close-popup]');
 
 // Thay URL này bằng URL Web App sau khi deploy Apps Script.
 const APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzw06zfthu5zoU6ADSqHgmyzjAi8mJIbbW0djWs0gzL2q8vTSGvGaIzXZt7EDiJ1SDg/exec';
+const LIENTHONG_APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzQ_p80yq0Dkrv73ctocaG3EYVWK44N3YqO6Wtsaw0upaWglWZQ5og7lQty7NO3W7nl/exec';
 
 function showToast(message) {
   toast.textContent = message;
@@ -11,6 +14,48 @@ function showToast(message) {
   window.clearTimeout(showToast.timer);
   showToast.timer = window.setTimeout(() => toast.classList.remove('show'), 3600);
 }
+
+function openPopup(id) {
+  const popup = document.getElementById(id);
+  if (!popup) return;
+  popup.classList.add('open');
+  popup.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePopup(popup) {
+  if (!popup) return;
+  popup.classList.remove('open');
+  popup.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+popupTriggers.forEach((button) => {
+  button.addEventListener('click', (event) => {
+    event.preventDefault();
+    const popupId = button.getAttribute('data-open-popup');
+    if (popupId) openPopup(popupId);
+  });
+});
+
+popupCloseButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const popup = button.closest('.popup-overlay');
+    closePopup(popup);
+  });
+});
+
+document.querySelectorAll('.popup-overlay').forEach((popup) => {
+  popup.addEventListener('click', (event) => {
+    if (event.target === popup) closePopup(popup);
+  });
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+  const openedPopup = document.querySelector('.popup-overlay.open');
+  if (openedPopup) closePopup(openedPopup);
+});
 
 forms.forEach((form) => {
   form.addEventListener('submit', async (event) => {
@@ -21,7 +66,10 @@ forms.forEach((form) => {
     }
 
     const formName = form.dataset.formName || 'Form đăng ký';
-    if (!APPS_SCRIPT_WEB_APP_URL || APPS_SCRIPT_WEB_APP_URL.includes('PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE')) {
+    const isLienThongForm = Boolean(form.closest('.popup-overlay'));
+    const webhookUrl = isLienThongForm ? LIENTHONG_APPS_SCRIPT_WEB_APP_URL : APPS_SCRIPT_WEB_APP_URL;
+
+    if (!webhookUrl || webhookUrl.includes('PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE')) {
       showToast('Chưa cấu hình URL Google Apps Script.');
       return;
     }
@@ -36,7 +84,20 @@ forms.forEach((form) => {
       params.set(key, String(value).trim());
     });
 
-    const requestUrl = `${APPS_SCRIPT_WEB_APP_URL}?${params.toString()}`;
+    if (isLienThongForm) {
+      // Tuong thich voi cac sheet/appscript dang dung bo cot cu.
+      if (!params.get('name')) {
+        params.set('name', params.get('full_name') || '');
+      }
+      if (!params.get('method')) {
+        params.set('method', params.get('training_system') || '');
+      }
+      if (!params.get('gpa_sum')) {
+        params.set('gpa_sum', '');
+      }
+    }
+
+    const requestUrl = `${webhookUrl}?${params.toString()}`;
 
     try {
       // Dữ liệu nằm trên query string để Apps Script luôn đọc được qua e.parameter.
@@ -49,6 +110,8 @@ forms.forEach((form) => {
 
       showToast(`${formName} đã được ghi nhận. Bộ phận tuyển sinh sẽ liên hệ tư vấn.`);
       form.reset();
+      const popup = form.closest('.popup-overlay');
+      if (popup) closePopup(popup);
     } catch (error) {
       showToast('Không gửi được dữ liệu. Vui lòng thử lại.');
     }

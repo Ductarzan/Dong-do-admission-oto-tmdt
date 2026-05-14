@@ -196,7 +196,7 @@ h3 { font-size: clamp(26px, 3vw, 40px); }
 .lead-form { padding: 28px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; color: var(--ink); }
 .field { display: grid; gap: 7px; }
 .field label { font-size: 13px; font-weight: 900; color: var(--moss); }
-input, select {
+input, select, textarea {
   width: 100%;
   min-height: 54px;
   border: 1px solid var(--line);
@@ -207,7 +207,12 @@ input, select {
   font: inherit;
   outline: none;
 }
-input:focus, select:focus { border-color: var(--ember); box-shadow: 0 0 0 4px rgba(230, 95, 43, .12); }
+textarea {
+  min-height: 120px;
+  padding: 12px 14px;
+  resize: vertical;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--ember); box-shadow: 0 0 0 4px rgba(230, 95, 43, .12); }
 .lead-form .full, .lead-form .form-note { grid-column: 1 / -1; }
 .form-note { margin: 0; color: var(--muted); font-size: 13px; text-align: center; }
 
@@ -386,7 +391,7 @@ details p { margin: 0; padding: 0 22px 22px; color: var(--muted); }
   .quick-facts div { padding: 16px; }
   .major-image { height: 300px; }
   .wide { grid-column: auto; }
-  .mobile-sticky {
+.mobile-sticky {
     position: fixed;
     left: 10px;
     right: 10px;
@@ -415,4 +420,58 @@ details p { margin: 0; padding: 0 22px 22px; color: var(--muted); }
   }
   .mobile-sticky a:first-child { background: var(--ember); }
   .site-footer { padding-bottom: 96px; }
+}
+
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(8, 18, 14, .62);
+  backdrop-filter: blur(4px);
+  z-index: 120;
+}
+.popup-overlay.open { display: flex; }
+.popup-card {
+  width: min(760px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  background: #0b7845;
+  border-radius: 24px;
+  padding: 22px;
+  border: 2px solid rgba(246, 181, 54, .5);
+  box-shadow: var(--shadow);
+  color: #fff;
+}
+.popup-card h3 { font-size: clamp(30px, 4vw, 42px); margin-bottom: 14px; }
+.popup-card .eyebrow { color: #fff3c9; margin-bottom: 8px; }
+.popup-close {
+  position: sticky;
+  top: 0;
+  margin-left: auto;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--ink);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+.popup-form {
+  margin-top: 12px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  grid-template-columns: repeat(2, 1fr);
+}
+.popup-form .field label { color: #fff; }
+.popup-form input,
+.popup-form select,
+.popup-form textarea {
+  background: #fff;
 }

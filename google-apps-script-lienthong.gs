@@ -1,21 +1,18 @@
 /**
- * Google Apps Script cho landing page tuyển sinh.
- * Nhận dữ liệu qua query string (e.parameter) cho cả GET/POST.
+ * Apps Script RIENG cho form Liên thông.
+ * Nhan du lieu qua query string (e.parameter) cho ca GET/POST.
  */
-const SHEET_NAME = 'Leads';
+const SHEET_NAME = 'Leads_LienThong';
 const HEADERS = [
   'submitted_at',
   'form_name',
   'full_name',
-  'name',
   'birth_date',
   'phone',
   'email',
-  'major',
   'training_system',
+  'major',
   'current_education',
-  'method',
-  'gpa_sum',
   'note',
   'page_url'
 ];
@@ -38,7 +35,7 @@ function handleRequest_(e) {
     sheet.appendRow(row);
 
     return ContentService
-      .createTextOutput(JSON.stringify({ ok: true }))
+      .createTextOutput(JSON.stringify({ ok: true, type: 'lien_thong' }))
       .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
     return ContentService
