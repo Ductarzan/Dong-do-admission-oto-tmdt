@@ -7,6 +7,11 @@ const popupCloseButtons = document.querySelectorAll('[data-close-popup]');
 // Thay URL này bằng URL Web App sau khi deploy Apps Script.
 const APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzw06zfthu5zoU6ADSqHgmyzjAi8mJIbbW0djWs0gzL2q8vTSGvGaIzXZt7EDiJ1SDg/exec';
 const LIENTHONG_APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzQ_p80yq0Dkrv73ctocaG3EYVWK44N3YqO6Wtsaw0upaWglWZQ5og7lQty7NO3W7nl/exec';
+const THANK_YOU_URLS = {
+  chinh_quy: 'thankyou=chinhquy',
+  lien_thong: 'thankyou=lienthong',
+  nganh_khac: 'thankyou=nganhkhac'
+};
 
 function showToast(message) {
   toast.textContent = message;
@@ -123,6 +128,14 @@ forms.forEach((form) => {
       form.reset();
       const popup = form.closest('.popup-overlay');
       if (popup) closePopup(popup);
+
+      const thankYouQuery = THANK_YOU_URLS[leadType];
+      if (thankYouQuery) {
+        window.setTimeout(() => {
+          const base = window.location.origin + window.location.pathname;
+          window.location.href = `${base}?${thankYouQuery}`;
+        }, 250);
+      }
     } catch (error) {
       showToast('Không gửi được dữ liệu. Vui lòng thử lại.');
     }
