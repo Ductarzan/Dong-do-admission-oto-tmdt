@@ -480,3 +480,12 @@ details p { margin: 0; padding: 0 22px 22px; color: var(--muted); }
 .popup-form textarea {
   background: #fff;
 }
+.success-card {
+  width: min(560px, 100%);
+  background: #173f2f;
+}
+.success-card .success-text {
+  margin: 0;
+  font-size: 17px;
+  color: rgba(255,255,255,.9);
+}

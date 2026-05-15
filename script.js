@@ -62,6 +62,19 @@ document.addEventListener('keydown', (event) => {
   if (openedPopup) closePopup(openedPopup);
 });
 
+function showSuccessPopupFromUrl() {
+  const url = new URL(window.location.href);
+  const thankYouValue = url.searchParams.get('thankyou');
+  if (!thankYouValue) return;
+
+  openPopup('success-popup');
+
+  // Lam sach URL sau khi hien popup thanh cong.
+  url.searchParams.delete('thankyou');
+  const cleanUrl = `${url.pathname}${url.search}${url.hash}`;
+  window.history.replaceState({}, '', cleanUrl);
+}
+
 forms.forEach((form) => {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -152,3 +165,5 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.14 });
 
 reveals.forEach((element) => observer.observe(element));
+
+showSuccessPopupFromUrl();
